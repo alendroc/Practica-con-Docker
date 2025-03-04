@@ -1,6 +1,3 @@
-CREATE DATABASE eventos;
-
-USE eventos;
 
 CREATE TABLE cliente (
     cedula_cliente VARCHAR(20) PRIMARY KEY,
