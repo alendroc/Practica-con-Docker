@@ -4,10 +4,18 @@ exports.getAll= (req, res) => {
     const query = 'SELECT * FROM cliente';
     db.query(query, (err, results) => {
         if (err) {
-            console.error('Error en la consulta:', err);
-            return res.status(500).send('Error en la consulta');
+          console.error('Error en la consulta:', err);
+          return res.status(500).json({
+              status: 404,
+              error: 'Error en la consulta a la base de datos' });
         }
-        res.json(results);
+        if (!results || results.length === 0) {
+          return res.status(404).json({
+              status: 404,
+              error: 'No hay clientes registrados' });
+      }
+
+      res.status(200).json(results);
     });
 };
 
@@ -20,7 +28,13 @@ exports.buscarCliente = (req, res) => {
       console.error('Error en la consulta:', err);
       return res.status(500).send('Error en la consulta');
     }
-    res.json(results);
+    if (results.length === 0) {
+      return res.status(404).json({ 
+              status: 404,
+              error: 'Actividad no encontrada',
+              message: `No existe ningun cliente con la cedula ${cedula}` });
+     
+  } res.json(results);
   });
 };
 
@@ -29,7 +43,10 @@ exports.crearCliente = (req, res) => {
 
     // Validar que se envíen todos los campos requeridos
     if (!cedula_cliente || !nombre_cliente || !edad_cliente) {
-      return res.status(400).json({ message: 'Todos los campos son requeridos: cedula_cliente, nombre_cliente, edad_cliente' });
+      return res.status(400).json(
+        {  status: 404,
+          error: 'Error al crear el cliente',
+          message: 'Todos los campos son requeridos: cedula_cliente, nombre_cliente, edad_cliente' });
     }
 
     const query = 'INSERT INTO cliente ( cedula_cliente, nombre_cliente, edad_cliente) VALUES (?, ?, ?)';
