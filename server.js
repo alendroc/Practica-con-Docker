@@ -16,7 +16,7 @@ app.use('/api', clientesRoutes);
 // Middleware para manejo centralizado de errores
 app.use((err, req, res, next) => {
   console.error('Error inesperado:', err);
-  res.status(500).json({ message: 'Ocurrió un error en el servidor (Middleware)' });
+  res.status(500).json({ message: 'Ocurrió un error en el servidor (Middleware)'});
 });
 
 app.listen(port, () => {

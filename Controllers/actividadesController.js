@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../db/db');
 
 exports.listarActividades = (req, res) => {
     const query = 'SELECT * FROM actividad';
@@ -28,8 +28,8 @@ exports.buscarActividad = (req, res) => {
 exports.crearActividad = (req, res) => {
     const { nombre_actividad, cantidad_personas, fecha_actividad, lugar_actividad, cedula_cliente } = req.body;
 
-    if (!nombre_actividad || !cantidad_personas || !fecha_actividad || !lugar_actividad || !cedula_cliente) {
-        return res.status(400).json({ message: 'Todos los campos son requeridos: nombre_actividad, cantidad_personas, fecha_actividad, lugar_actividad y cedula_cliente' });
+    if (!nombre_actividad || !cantidad_personas || !fecha_actividad || !cedula_cliente) {
+        return res.status(400).json({ message: 'los campos requeridos son: nombre_actividad, cantidad_personas, fecha_actividad y cedula_cliente' });
     }
 
     const query = 'INSERT INTO actividad (nombre_actividad, cantidad_personas, fecha_actividad, lugar_actividad, cedula_cliente) VALUES (?, ?, ?, ?, ?)';

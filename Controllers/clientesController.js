@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../db/db');
 
 exports.getAll= (req, res) => {
     const query = 'SELECT * FROM cliente';
@@ -37,7 +37,7 @@ exports.crearCliente = (req, res) => {
     db.query(query, [cedula_cliente, nombre_cliente, edad_cliente], (err, results) => {
       if (err) {
         console.error('Error al insertar el cliente:', err);
-        return res.status(500).json({ message: 'Error al insertar el cliente' });
+        return res.status(500).json({ message: 'Error al insertar el cliente', });
       }
       // Se retorna el ID generado junto con los datos insertados
       res.status(201).json({
