@@ -12,6 +12,8 @@ const connection = mysql.createConnection({
 connection.connect((err) => {
   if (err) {
     console.error('Error al conectar con la base de datos:', err);
+    console.log('Reintentando en 5 segundos...');
+      setTimeout(connectWithRetry, 5000);
   } else {
     console.log('Conexión exitosa a la base de datos');
   }
